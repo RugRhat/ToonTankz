@@ -26,29 +26,36 @@ void ATurret::BeginPlay(){
 void ATurret::Tick(float DeltaTime){
 
 	Super::Tick(DeltaTime);
+
+    if(!PlayerTank || ReturnDistanceToPlayer() > FireRange){return;}
+
+    RotateTurret(PlayerTank->GetActorLocation());
 }
 
 
 void ATurret::CheckFireCondition(){
 
     // If player == null || is dead: BAIL!
-    if(!PlayerTank){
-        return;
-    }
+    if(!PlayerTank){return;}
 
     // If player is in range then: FIRE!
     if(ReturnDistanceToPlayer() <= FireRange){
-        // Fire
-        UE_LOG(LogTemp, Warning, TEXT("FIRE!!"));
+        Fire();
     }
 }
 
 
 float ATurret::ReturnDistanceToPlayer(){
 
-    if(!PlayerTank){
-        return 0.f;
-    }
+    if(!PlayerTank){return 0.f;}
 
    return (PlayerTank->GetActorLocation() - GetActorLocation()).Size();
+}
+
+
+void ATurret::HandleDestruction(){
+
+    Super::HandleDestruction();
+
+    Destroy();
 }

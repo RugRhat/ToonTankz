@@ -20,6 +20,8 @@ ATank::ATank(){
 void ATank::BeginPlay(){
 	
     Super::BeginPlay();
+
+    PlayerControllerRef = Cast<APlayerController>(GetController());
 	
 }
 
@@ -31,6 +33,13 @@ void ATank::Tick(float DeltaTime){
 
     Rotate();
     Move();
+
+    if(PlayerControllerRef){
+        PlayerControllerRef->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+        FVector HitLocation = TraceHitResult.ImpactPoint;
+
+        RotateTurret(HitLocation);
+    }
 }
 
 
@@ -41,6 +50,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
 
     PlayerInputComponent->BindAxis("MoveForward", this, &ATank::CalculateMoveInput);
     PlayerInputComponent->BindAxis("Turn", this, &ATank::CalculateRotateInput);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ATank::Fire);
 }
 
 
@@ -69,4 +79,13 @@ void ATank::Move(){
 void ATank::Rotate(){
 
     AddActorLocalRotation(RotationDirection, true);
+}
+
+
+void ATank::HandleDestruction(){
+    
+    Super::HandleDestruction();
+
+    // Create function to hide player
+
 }
