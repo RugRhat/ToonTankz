@@ -88,4 +88,6 @@ void ATank::HandleDestruction(){
 
     // Create function to hide player
 
+    Destroy();
+
 }

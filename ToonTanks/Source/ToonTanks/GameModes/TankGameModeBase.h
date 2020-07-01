@@ -30,6 +30,9 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player", meta = (AllowPrivateAccess = "true"))
 	ATank* PlayerTank;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Loop", meta = (AllowPrivateAccess = "true"))
+	int StartDelay = 3;
+
 	void HandleGameStart();
 	void HandleGameOver(bool PlayerWon);
 
