@@ -86,8 +86,14 @@ void ATank::HandleDestruction(){
     
     Super::HandleDestruction();
 
-    // Create function to hide player
+    bAlive = false;
 
-    Destroy();
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
+}
 
+
+bool ATank::GetPlayerAlive(){
+
+    return bAlive;
 }
