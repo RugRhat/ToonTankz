@@ -53,6 +53,12 @@ void APawnBase::Fire(){
 }
 
 
+void APawnBase::PawnDestroyed(){
+
+	HandleDestruction();
+}
+
+
 void APawnBase::HandleDestruction(){
 
 	// Universal functionality...
